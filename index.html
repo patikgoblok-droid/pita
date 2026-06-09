@@ -2,8 +2,47 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Kartu Ucapan Idul Fitri 1447 H</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌸 Selamat Ulang Tahun - Pink & White 🌸</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Syncopate:wght@400;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        syncopate: ['Syncopate', 'sans-serif'],
+                        space: ['Space Grotesk', 'sans-serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        pink: {
+                            light: '#fff0f5',
+                            DEFAULT: '#f8bbd0',
+                            dark: '#f48fb1',
+                            deep: '#ec407a',
+                        },
+                        white: '#ffffff',
+                        black: '#333333'
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -11,325 +50,927 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
-            background: linear-gradient(145deg, #0b3b2f 0%, #1b4d3a 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            position: relative;
-        }
-
-        /* Dekorasi latar belakang islami */
-        body::before {
-            content: "☾";
-            font-size: 220px;
-            color: rgba(255, 215, 150, 0.08);
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-family: monospace;
-            pointer-events: none;
-            rotate: -15deg;
-        }
-
-        body::after {
-            content: "★";
-            font-size: 180px;
-            color: rgba(255, 210, 110, 0.07);
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            pointer-events: none;
-            font-family: monospace;
-        }
-
-        /* Container utama kartu */
-        .card-container {
-            max-width: 520px;
+        body, html {
             width: 100%;
-            background: #fffef7;
-            border-radius: 64px 48px 64px 48px;
-            box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(210, 180, 120, 0.3);
+            height: 100%;
             overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.3s;
-            backdrop-filter: blur(0px);
+            background-color: #fff0f5;
+            cursor: none;
+            touch-action: none;
         }
 
-        .card-container:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 40px 50px -20px rgba(0, 0, 0, 0.5);
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
         }
 
-        /* Area foto */
-        .photo-area {
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ec407a;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(236, 64, 122, 0.6);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        /* Glitch Effect */
+        .glitch-hover:hover {
+            animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-10deg); }
+            40% { transform: skew(10deg); }
+            60% { transform: skew(-5deg); }
+            80% { transform: skew(5deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Card 3D Effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        /* Hover effect for wish cards */
+        .wish-card {
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background: white;
+            border: 1px solid #f8bbd0;
+        }
+        .wish-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #ec407a;
+            box-shadow: 0 20px 40px rgba(236, 64, 122, 0.15);
+        }
+
+        /* Gift Box Styles - Pink Theme */
+        .gift-container {
+            margin: 20px 0;
+        }
+        .gift-box {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gift-box:hover {
+            transform: scale(1.08);
+        }
+        .gift-box:active {
+            transform: scale(0.96);
+        }
+        .gift-body {
+            position: absolute;
+            bottom: 0;
+            width: 140px;
+            height: 100px;
+            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            border: 2px solid #ec407a;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .gift-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 100%;
+            background: #ffb7c5;
+            opacity: 0.6;
+        }
+        .gift-body::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
             width: 100%;
-            background: #f5efe3;
-            padding: 28px 28px 12px 28px;
+            height: 20px;
+            background: #ffb7c5;
+            opacity: 0.6;
+        }
+        .gift-lid {
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 150px;
+            height: 42px;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            border: 2px solid #ec407a;
+            border-radius: 5px;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .gift-lid::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 100%;
+            background: #ffb7c5;
+            opacity: 0.6;
+        }
+        .gift-ribbon {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 38px;
+            height: 28px;
+        }
+        .gift-ribbon::before,
+        .gift-ribbon::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 3px solid #ffb7c5;
+            border-radius: 50% 50% 0 50%;
+            top: 0;
+            opacity: 0.9;
+        }
+        .gift-ribbon::before {
+            left: 0;
+            transform: rotate(-45deg);
+        }
+        .gift-ribbon::after {
+            right: 0;
+            transform: rotate(45deg);
+            border-radius: 50% 50% 50% 0;
+        }
+        .gift-box.opened .gift-lid {
+            transform: translateY(-75px) rotate(-25deg);
+            opacity: 0;
+        }
+
+        /* Video Modal */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(236, 64, 122, 0.85);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .video-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .video-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+        .video-modal.active .video-container {
+            transform: scale(1);
+        }
+        .video-container video {
+            width: 100%;
+            max-height: 80vh;
+            display: block;
+        }
+        .close-video {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: #ec407a;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .close-video:hover {
+            transform: scale(1.1);
+            background: #f8bbd0;
+            color: #ec407a;
+        }
+        @media (max-width: 768px) {
+            .close-video {
+                top: -50px;
+                right: 5px;
+            }
+        }
+
+        /* Cake Section Styles - Pink Theme */
+        .cake-section {
+            padding: 40px 20px;
+        }
+
+        .cake-container {
+            position: relative;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cake-container:hover {
+            transform: scale(1.03);
+        }
+
+        .cake {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cake-layer {
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .cake-layer-1 {
+            width: 180px;
+            height: 50px;
+            background: linear-gradient(180deg, #f8bbd0, #f48fb1);
+            border: 2px solid #ec407a;
+            border-radius: 10px 10px 15px 15px;
+        }
+
+        .cake-layer-2 {
+            width: 230px;
+            height: 60px;
+            background: linear-gradient(180deg, #fce4ec, #f8bbd0);
+            border: 2px solid #ec407a;
+            margin-top: -2px;
+        }
+
+        .cake-layer-3 {
+            width: 280px;
+            height: 70px;
+            background: linear-gradient(180deg, #fff0f5, #fce4ec);
+            border: 2px solid #ec407a;
+            border-radius: 15px 15px 20px 20px;
+            margin-top: -2px;
+        }
+
+        .cake-decoration {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            top: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .cake-dot {
+            width: 7px;
+            height: 7px;
+            background: #ffb7c5;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .candles {
+            display: flex;
+            gap: 15px;
+            margin-bottom: -5px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .candle {
+            position: relative;
+            width: 7px;
+            height: 40px;
+            background: linear-gradient(180deg, #fff, #ffe0e7);
+            border-radius: 3px 3px 2px 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .candle:hover {
+            transform: scaleY(1.1);
+        }
+
+        .candle .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 11px;
+            height: 18px;
+            background: radial-gradient(ellipse at bottom, #fff 0%, #ffdd00 30%, #ff6600 60%, transparent 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            filter: blur(0.5px);
+            box-shadow: 0 0 15px 5px rgba(255, 200, 0, 0.3);
+        }
+
+        .candle .flame.blown {
+            animation: blowOut 0.5s ease forwards;
+        }
+
+        .candle .wick {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 7px;
+            background: #333;
+            border-radius: 1px;
+        }
+
+        .smoke {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to top, rgba(255,255,255,0.5), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: smokeRise 2s ease forwards;
+        }
+
+        .cake-plate {
+            width: 320px;
+            height: 18px;
+            background: linear-gradient(180deg, #f8bbd0, #f48fb1);
+            border-radius: 50%;
+            margin-top: 5px;
+            border: 2px solid #ec407a;
+        }
+
+        /* Profile Image Styles */
+        .profile-image-container {
+            margin: 20px auto;
+            position: relative;
             display: flex;
             justify-content: center;
-            border-bottom: 2px dashed #e9dbbc;
-        }
-
-        .frame-photo {
-            background: white;
-            padding: 12px 12px 8px 12px;
-            border-radius: 36px;
-            box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            transform: rotate(0.5deg);
-            transition: all 0.2s;
-        }
-
-        .photo {
-            width: 100%;
-            max-width: 380px;
-            height: auto;
-            border-radius: 28px;
-            display: block;
-            object-fit: cover;
-            aspect-ratio: 1 / 0.9;
-            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
-            transition: 0.2s;
-        }
-
-        /* contoh jika ingin mengganti foto dengan gambar stok, pakai unsplash atau lokal */
-        /* pada kode ini saya gunakan gambar gratis dari placeholder dengan nuansa islami */
-
-        /* konten kata-kata */
-        .greeting-content {
-            padding: 32px 32px 42px 32px;
-            text-align: center;
-        }
-
-        .arabic {
-            font-family: 'Amiri', 'Times New Roman', 'Traditional Arabic', serif;
-            font-size: 1.9rem;
-            color: #b46b3c;
-            margin-bottom: 18px;
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
-
-        .main-message {
-            font-size: 1.65rem;
-            font-weight: 600;
-            color: #2b5e3b;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .sub-message {
-            font-size: 1rem;
-            color: #7c5e3a;
-            background: #fef7e6;
-            display: inline-block;
-            padding: 8px 18px;
-            border-radius: 40px;
-            margin: 12px 0 8px 0;
-            font-weight: 500;
-        }
-
-        .divider {
-            width: 70px;
-            height: 2px;
-            background: linear-gradient(90deg, #e2c28b, #b98f4b, #e2c28b);
-            margin: 20px auto;
-            border-radius: 4px;
-        }
-
-        .long-text {
-            font-size: 1rem;
-            line-height: 1.55;
-            color: #3f3a2b;
-            margin: 16px 0 8px 0;
-            font-weight: 450;
-        }
-
-        .quote {
-            font-style: italic;
-            background: #faf3e0;
-            padding: 14px 16px;
-            border-radius: 32px;
-            margin: 20px 0 12px;
-            color: #6a4c2c;
-            font-size: 0.95rem;
-            border-left: 4px solid #dba35a;
-        }
-
-        .btn-copy {
-            background: none;
-            border: 1.5px solid #dbb067;
-            padding: 10px 20px;
-            border-radius: 60px;
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #946b38;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 16px;
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background-color: #fffcf5;
+        }
+        
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 20px 35px rgba(236, 64, 122, 0.25);
+            border: 4px solid #ec407a;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            cursor: pointer;
+        }
+        
+        .profile-pic:hover {
+            transform: scale(1.03) rotate(2deg);
+            box-shadow: 0 25px 45px rgba(236, 64, 122, 0.4);
+            border-color: #f8bbd0;
+        }
+        
+        @media (max-width: 640px) {
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .profile-pic {
+            animation: float 4s ease-in-out infinite;
         }
 
-        .btn-copy:hover {
-            background: #e9dbbc;
-            color: #5c3e1f;
-            border-color: #b57c2e;
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 1; }
+            50% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(0.95) rotate(-1deg); opacity: 1; }
         }
 
-        /* footer */
-        .card-footer {
-            background: #fcf8ef;
-            padding: 16px 28px 24px;
-            text-align: center;
-            border-top: 1px solid #f0e5d0;
-            font-size: 0.75rem;
-            color: #b2864b;
+        @keyframes blowOut {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            50% { transform: translateX(-50%) scale(1.5); opacity: 0.5; }
+            100% { transform: translateX(-50%) scale(0); opacity: 0; }
         }
 
-        /* untuk mode sentuh dan responsif */
-        @media (max-width: 550px) {
-            body {
-                padding: 16px;
-            }
-            .greeting-content {
-                padding: 24px 22px 32px;
-            }
-            .main-message {
-                font-size: 1.4rem;
-            }
-            .arabic {
-                font-size: 1.5rem;
-            }
-            .photo-area {
-                padding: 20px 20px 8px 20px;
-            }
+        @keyframes smokeRise {
+            0% { opacity: 0.6; transform: translateX(-50%) translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-40px) scale(2); }
         }
 
-        /* efek shimmer untuk elegan */
-        @keyframes softGlow {
-            0% { text-shadow: 0 0 0px rgba(218,165,32,0);}
-            100% { text-shadow: 0 0 4px rgba(218,165,32,0.2);}
-        }
-        .main-message {
-            animation: softGlow 2s infinite alternate;
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-40px); }
         }
     </style>
 </head>
-<body>
+<body class="text-pink-dark font-space selection:bg-pink selection:text-white antialiased">
 
-<div class="card-container">
-    <!-- Area Foto -->
-    <div class="photo-area">
-        <div class="frame-photo">
-            <img class="photo" 
-                 src="Tak_berjudul367_20250614101748.webp" 
-                 alt="Foto Idul Fitri Bahagia">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+    
+    <!-- Grain Effect -->
+    <div class="grain"></div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal">
+        <div class="video-container">
+            <button class="close-video" id="close-video-btn">✕</button>
+            <img src="Screenshot_20251104_223802_com.mobile.legends.webp" alt="jawa">
         </div>
     </div>
 
-    <!-- Konten Kata-Kata di Bawah Foto -->
-    <div class="greeting-content">
-        <div class="arabic">
-            تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ
-        </div>
-        <div class="main-message">
-            ✨ Mohon Maaf Lahir & Batin ✨
-        </div>
-        <div class="sub-message">
-            Idul Fitri 1447 Hijriah
-        </div>
-        <div class="divider"></div>
-        <div class="long-text">
-            Kemenangan setelah sebulan menahan lapar dan haus bukan hanya tentang menahan diri, 
-            tetapi tentang hati yang kembali suci. Di hari yang fitri ini, saya pribadi mengucapkan 
-            <strong>Selamat Hari Raya Idul Fitri</strong>, semoga kebahagiaan menyertai langkah kita semua.
-        </div>
-        <div class="quote">
-            "Bersihkan hati dari dendam, maafkan segala salah, dan sambut hari penuh keberkahan. 
-            Selamat Lebaran, semoga cinta dan kasih sayang selalu mengelilingi keluarga kita."
-        </div>
-
-        <!-- Kata-kata pilihan lain jika pengguna ingin inspirasi (tampil sebagai variasi) -->
-        <div style="margin: 18px 0 8px; font-size: 0.85rem; background: #FCF3E0; padding: 8px 12px; border-radius: 40px;">
-            🌙 minal aidin wal faizin | 🌟 Happy Eid Mubarak
-        </div>
-
-        <!-- tombol copy kalimat agar bisa dipakai pengguna -->
-        <button class="btn-copy" id="copyMessageBtn">
-            📋 Salin ucapan untuk status
-        </button>
-        <p style="font-size: 11px; margin-top: 12px; opacity: 0.6;">Klik tombol untuk menyalin teks ucapan</p>
-    </div>
-
-    <div class="card-footer">
-        🌙 Taqabbalallahu minna wa minkum, shiyamana wa shiyamakum 🌙
-    </div>
-</div>
-
-<script>
-    (function() {
-        // Kumpulan variasi kata-kata yang bisa disalin user
-        const messageOptions = [
-            "Maaf lahir dan batin. Semoga fitri membawa kita pada kedamaian hati. ✨ Selamat Idul Fitri 1447 H.",
-            "Lebaran bukan hanya tentang baju baru, tapi tentang hati yang baru. Mohon maaf lahir dan batin. 🤍",
-            "Kembali ke fitri, kembali pada yang suci. Selamat Idul Fitri, semoga berkah selalu menyertai. 🌙",
-            "Bersama di hari yang fitri, semoga silaturahmi kita tetap terjaga. Selamat Idul Fitri untuk keluarga besar! 💕",
-            "Taqabbalallahu minna wa minkum, mohon maaf lahir dan batin. Selamat Lebaran 2026!",
-            "Secerah senyuman di foto ini, semoga hari rayamu dipenuhi kebahagiaan. Minal aidin wal faizin 🕌",
-            "Bersihkan hati, rajut kembali tali kasih. Selamat Idul Fitri, penuh cinta dan kedamaian."
-        ];
-
-        const copyBtn = document.getElementById('copyMessageBtn');
+    <!-- Main Container -->
+    <div id="app" class="relative w-full h-full flex items-center justify-center transition-colors duration-700 bg-pink-light">
         
-        // fungsi untuk menyalin teks ke clipboard
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                // feedback sementara
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = "✅ Tersalin!";
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                }, 2000);
-            } catch (err) {
-                console.error('Gagal menyalin: ', err);
-                alert("Tekan lama teks untuk salin secara manual 😊");
-            }
-        }
+        <!-- Interactive Layer (Initial Taps) -->
+        <div id="click-layer" class="absolute inset-0 z-40 cursor-pointer flex flex-col items-center justify-center">
+            <div id="seq-1" class="absolute font-syncopate text-2xl md:text-5xl tracking-[0.5em] uppercase opacity-100 transition-opacity duration-500 text-center px-4 text-pink-deep">
+                halo pit
+                <p class="text-pink-dark">:P</p>
+            </div>
+            <div id="seq-2" class="absolute font-syncopate text-3xl md:text-6xl tracking-[0.3em] uppercase opacity-0 scale-90 text-center px-4 text-pink-deep">
+                AWASSSS
+                <p class="text-pink-dark">awassss</p>
+            </div>
+            <div id="seq-3" class="absolute font-syncopate text-4xl md:text-7xl tracking-[0.2em] uppercase opacity-0 scale-90 text-center px-4 text-pink-deep">
+              
+                <p class="text-pink-dark">selamat menikmati</p>
+            </div>
 
-        // Saat tombol diklik, pilih satu pesan secara acak dari daftar
-        copyBtn.addEventListener('click', () => {
-            const randomIndex = Math.floor(Math.random() * messageOptions.length);
-            const selectedMessage = messageOptions[randomIndex];
-            copyToClipboard(selectedMessage);
+            <div class="absolute bottom-10 flex space-x-2">
+                <div id="dot-1" class="w-2 h-2 rounded-full bg-pink-deep opacity-100 transition-all duration-300"></div>
+                <div id="dot-2" class="w-2 h-2 rounded-full bg-pink-deep opacity-20 transition-all duration-300"></div>
+                <div id="dot-3" class="w-2 h-2 rounded-full bg-pink-deep opacity-20 transition-all duration-300"></div>
+            </div>
+        </div>
+
+        <!-- Final Reveal Screen 1: Main Greeting (Pink & White Theme) -->
+        <div id="final-screen" class="absolute inset-0 z-30 bg-pink-light text-pink-deep opacity-0 pointer-events-none overflow-y-auto" style="display: flex; flex-direction: column;">
+            
+            <div class="absolute top-10 left-10 w-32 h-32 border border-pink rounded-full opacity-20 animate-[spin_10s_linear_infinite]"></div>
+            <div class="absolute bottom-10 right-10 w-40 h-40 border border-pink opacity-20 animate-[spin_15s_linear_infinite_reverse]"></div>
+            <div class="absolute top-1/4 right-1/4 w-10 h-10 bg-pink opacity-10 rounded-sm rotate-45"></div>
+            <div class="absolute bottom-1/4 left-1/4 w-16 h-16 bg-pink opacity-10 rounded-full"></div>
+
+            <!-- Hero Section -->
+            <div class="relative z-10 flex flex-col items-center justify-center pt-12 pb-6 px-6">
+                <div id="greeting-card" class="flex flex-col items-center text-center perspective-1000 max-w-4xl mx-auto">
+                    <p class="font-space tracking-[0.3em] text-sm md:text-base uppercase mb-4 text-pink-dark opacity-0 translate-y-4" id="final-sub">🌸 🎀 🌸</p>
+                    
+                    <h1 class="font-syncopate font-bold text-5xl md:text-8xl lg:text-9xl leading-none uppercase text-pink-deep glitch-hover transition-all duration-300 cursor-pointer opacity-0 scale-110" id="final-title">
+                        Selamat<br>Ulang<br>Tahun
+                    </h1>
+                    
+                    <div class="mt-6 max-w-lg opacity-0 translate-y-4" id="final-msg">
+                        <p class="font-playfair text-xl md:text-2xl italic text-pink-dark">
+                            Dari si iblis katanya <p>(padahal baik banget kaya gini di kasi title iblis parah banget)</p>
+                        </p>
+                        <p class="font-space text-base md:text-lg font-light text-pink-dark leading-relaxed mt-4">
+                            semoga menjadi lebih baik lagi kedepannya, selalu sehat, panjang umur, dimudahkan segala urusan, diampuni dosanya, dan makin imuz lagi, iw imuz :3
+                            <p class="text-pink">(jangan ah dah tua juga imuz mulu buat kagres aja pit wkwkw)</p>
+                        </p>
+                        <div class="w-full h-px bg-pink-deep mt-6 mb-6 opacity-20"></div>
+                        <p class="font-syncopate text-xs tracking-widest font-bold flex items-center justify-center gap-2 cursor-pointer text-pink-dark">
+                            💖 kelik aja ada lagi di bagian ucapan selamat, paling ucapan yakan, disini mah buat hefun aja gambar gambar :P 💖
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gift Box Section -->
+            <div class="relative z-10 gift-container flex flex-col items-center justify-center py-4">
+                <h2 class="font-playfair text-xl md:text-2xl text-pink-deep mb-3">🎁 something hor hor hor 🎁</h2>
+                <p class="text-pink-dark text-sm mb-4">judulnya, lagi sepi apa lagi asik sendiri tuh ckckckc</p>
+                
+                <div class="gift-box" id="gift-box" onclick="openGiftVideo()">
+                    <div class="gift-lid">
+                        <div class="gift-ribbon"></div>
+                    </div>
+                    <div class="gift-body"></div>
+                </div>
+            </div>
+
+            <!-- Cake Section -->
+            <div class="relative z-10 cake-section flex flex-col items-center justify-center pb-16">
+                <h2 class="font-playfair text-2xl md:text-3xl text-pink-deep mb-2">Tiup Lilinnya (ga di tiup juga sih di kelik)</h2>
+                <p class="text-pink-dark text-sm mb-4">satu satu jangan ngespam, awas ngcrash</p>
+
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="candles">
+                            <div class="candle" onclick="blowCandle(this)">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="candle" onclick="blowCandle(this)">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="candle" onclick="blowCandle(this)">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="candle" onclick="blowCandle(this)">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="candle" onclick="blowCandle(this)">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                        </div>
+                        <div class="cake-layer cake-layer-1">
+                            <div class="cake-decoration">
+                                <div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div>
+                            </div>
+                        </div>
+                        <div class="cake-layer cake-layer-2">
+                            <div class="cake-decoration">
+                                <div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div>
+                            </div>
+                        </div>
+                        <div class="cake-layer cake-layer-3">
+                            <div class="cake-decoration">
+                                <div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div><div class="cake-dot"></div>
+                            </div>
+                        </div>
+                        <div class="cake-plate"></div>
+                    </div>
+                </div>
+                <p class="text-pink-dark/60 text-xs mt-4">🎂 HBD HBD HBD HBD 🎂</p>
+            </div>
+        </div>
+
+        <!-- Final Reveal Screen 2: Full Wishes Page (Pink & White) dengan Gambar Besar -->
+        <div id="wishes-screen" class="absolute inset-0 z-20 bg-white text-pink-deep opacity-0 pointer-events-none overflow-y-auto p-6 md:p-10" style="display: flex; flex-direction: column;">
+            
+            <div class="flex justify-between items-center mb-8 pb-4 border-b border-pink/20 sticky top-0 bg-white z-10">
+                <button id="back-btn" class="flex items-center gap-2 text-pink-dark/70 hover:text-pink-deep transition-colors font-space text-sm tracking-wider">
+                    ← Kembali
+                </button>
+                <div class="w-12 h-12 rounded-full bg-pink/10 flex items-center justify-center">
+                    <span class="text-xl">🎀</span>
+                </div>
+            </div>
+
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-block px-4 py-1 rounded-full bg-pink/10 text-pink-dark text-xs tracking-wider mb-4">
+                    ♡ Special Delivery ♡
+                </div>
+                <h1 class="font-playfair text-5xl md:text-7xl text-pink-deep mb-6 italic">
+                    Untukmu yang<br>Yang imuz selalu :P
+                </h1>
+                <div class="w-20 h-px bg-pink/30 mx-auto my-8"></div>
+                <p class="font-space text-pink-dark text-lg md:text-xl leading-relaxed max-w-xl mx-auto">
+                    "Semoga setiap harimu dipenuhi kebahagiaan, setiap mimpimu menjadi kenyataan, 
+                    dan setiap langkahmu membawa kebaikan. Istirahat juga BTW"
+                </p>
+            </div>
+
+            <!-- GAMBAR BESAR TENGAH - 20% area, kotak/rounded dengan animasi float -->
+            <div class="profile-image-container">
+                <img src="Screenshot 2026-06-09 185856.png" 
+                     alt="Foto Profile Ulang Tahun"
+                     class="profile-pic"
+                     id="profile-img"
+                     onclick="fireHeavyConfetti(); alert('💖 Happy Birthday! 💖')">
+            </div>
+            
+            <!-- Penjelasan kecil di bawah gambar -->
+            <div class="text-center mb-8">
+                <p class="text-pink-dark text-sm font-space tracking-wide">✨ Pungut pita channn ✨</p>
+                <div class="flex justify-center gap-2 mt-2">
+                    <span class="text-pink-deep text-xs">💗</span>
+                    <span class="text-pink-dark text-xs">yg di atas karungin aja ga sih, siapa yg setuju!!</span>
+                    <span class="text-pink-deep text-xs">💗</span>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto w-full">
+                <h2 class="font-syncopate text-2xl md:text-3xl text-center mb-10 tracking-wider text-pink-deep">✨ Random Momen harapan ✨</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                    <div class="wish-card rounded-2xl p-8 text-center shadow-sm cursor-pointer transition-all">
+                        <div class="text-5xl mb-4">🌸</div>
+                        <h3 class="font-syncopate text-lg font-bold mb-3 text-pink-deep">Kesehatan & Panjang Umur</h3>
+                        <p class="text-pink-dark text-sm leading-relaxed">Semoga selalu diberikan kesehatan, kekuatan, dan umur yang panjang untuk menjalani hari-hari penuh makna, dan penuh cobaan oleh token dan kawan kawan</p>
+                    </div>
+                    <div class="wish-card rounded-2xl p-8 text-center shadow-sm cursor-pointer transition-all">
+                        <div class="text-5xl mb-4">💫</div>
+                        <h3 class="font-syncopate text-lg font-bold mb-3 text-pink-deep">Kesuksesan & Kemudahan</h3>
+                        <p class="text-pink-dark text-sm leading-relaxed">Semoga setiap usaha dan kerja kerasmu berbuah manis, dimudahkan segala urusan, dan sukses selalu.</p>
+                    </div>
+                    <div class="wish-card rounded-2xl p-8 text-center shadow-sm cursor-pointer transition-all">
+                        <div class="text-5xl mb-4">💗</div>
+                        <h3 class="font-syncopate text-lg font-bold mb-3 text-pink-deep">Kebahagiaan</h3>
+                        <p class="text-pink-dark text-sm leading-relaxed">Semoga hatimu selalu dipenuhi ke bahagiaan, bukan kebencian ama token yah wkwkw, apa lagi lyon, dyam terlupakan, rispek,</p>
+                    </div>
+                </div>
+
+                <div class="bg-pink/10 rounded-2xl p-8 md:p-10 text-center mb-16">
+                    <div class="text-4xl mb-3">🎀</div>
+                    <p class="font-playfair text-2xl md:text-3xl italic text-pink-deep mb-4">
+                        "Terima kasih telah, menemani kita bermain ML, dengan sabar mengahadapi mufin ama token :P, "
+                    </p>
+                    <p class="text-pink-dark text-sm tracking-wider">- dari shimui yg paling paling dah, NPC aja aku mah, tidak ada yg sepesial -</p>
+                </div>
+
+                <div class="text-center mb-12">
+                    <button id="celebrate-btn" class="px-8 py-4 bg-pink-deep text-white rounded-full font-syncopate text-sm tracking-wider hover:bg-pink-dark transition-all duration-300 shadow-lg">
+                        Tekan aja, buat meriyah meriyahan 💖
+                    </button>
+                </div>
+
+                <div class="text-center pt-8 border-t border-pink/20">
+                    <p class="text-pink-dark/50 text-xs tracking-widest">✨ Selamat Ulang Tahun, PIW chann ✨</p>
+                    <p class="text-pink-dark/40 text-[10px] mt-2">Dibuat dengan kegabutan masa masa libur sekolah, ckckckck</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 150, fill: "forwards" });
         });
 
-        // tambahan: jika user ingin menyalin kalimat favorit dengan klik pada elemen quote?
-        const quoteElement = document.querySelector('.quote');
-        if(quoteElement) {
-            quoteElement.style.cursor = 'pointer';
-            quoteElement.addEventListener('click', () => {
-                let quoteText = quoteElement.innerText.trim();
-                copyToClipboard(quoteText);
+        document.querySelectorAll('a, button, .cursor-pointer, [onclick]').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(236, 64, 122, 0.1)';
             });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Video Modal Functions
+        const videoModal = document.getElementById('video-modal');
+        const giftVideo = document.getElementById('gift-video');
+        const closeVideoBtn = document.getElementById('close-video-btn');
+
+        window.openGiftVideo = function() {
+            const giftBox = document.getElementById('gift-box');
+            if (!giftBox.classList.contains('opened')) {
+                giftBox.classList.add('opened');
+                
+                // Pink confetti burst
+                const rect = giftBox.getBoundingClientRect();
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        confetti({ particleCount: 60, spread: 80, origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight }, colors: ['#ec407a', '#f8bbd0', '#ffb7c5'] });
+                    }, i * 150);
+                }
+            }
+            
+            videoModal.classList.add('active');
+            giftVideo.play().catch(e => console.log('Video autoplay error:', e));
+        };
+
+        closeVideoBtn.addEventListener('click', () => {
+            videoModal.classList.remove('active');
+            giftVideo.pause();
+            giftVideo.currentTime = 0;
+        });
+
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.remove('active');
+                giftVideo.pause();
+                giftVideo.currentTime = 0;
+            }
+        });
+
+        // Sequence Logic (Tap 3x)
+        let step = 0;
+        const clickLayer = document.getElementById('click-layer');
+        const app = document.getElementById('app');
+        
+        const seq1 = document.getElementById('seq-1');
+        const seq2 = document.getElementById('seq-2');
+        const seq3 = document.getElementById('seq-3');
+        const dots = [document.getElementById('dot-1'), document.getElementById('dot-2'), document.getElementById('dot-3')];
+
+        clickLayer.addEventListener('click', () => {
+            step++;
+            if (step === 1) {
+                gsap.to(seq1, { opacity: 0, y: -20, duration: 0.5 });
+                gsap.to(seq2, { opacity: 1, scale: 1, y: 0, duration: 0.5, delay: 0.3 });
+                dots[0].style.opacity = '0.2';
+                dots[1].style.opacity = '1';
+                dots[1].style.transform = 'scale(1.2)';
+                setTimeout(() => { dots[1].style.transform = 'scale(1)'; }, 300);
+            } 
+            else if (step === 2) {
+                gsap.to(seq2, { opacity: 0, y: -20, duration: 0.5 });
+                gsap.to(seq3, { opacity: 1, scale: 1, y: 0, duration: 0.5, delay: 0.3 });
+                dots[1].style.opacity = '0.2';
+                dots[2].style.opacity = '1';
+                dots[2].style.transform = 'scale(1.2)';
+                setTimeout(() => { dots[2].style.transform = 'scale(1)'; }, 300);
+            }
+            else if (step === 3) {
+                clickLayer.style.pointerEvents = 'none';
+                gsap.to(clickLayer, { opacity: 0, duration: 0.3 });
+                triggerReveal();
+            }
+        });
+
+        // Cake Logic
+        let candlesBlown = 0;
+        const totalCandles = 5;
+
+        window.blowCandle = function(candleEl) {
+            const flame = candleEl.querySelector('.flame');
+            if (flame.classList.contains('blown')) return;
+            flame.classList.add('blown');
+            const smoke = document.createElement('div');
+            smoke.className = 'smoke';
+            candleEl.appendChild(smoke);
+            candlesBlown++;
+            const rect = candleEl.getBoundingClientRect();
+            confetti({ particleCount: 12, startVelocity: 15, spread: 40, origin: { x: (rect.left + rect.width / 2) / window.innerWidth, y: (rect.top + rect.height / 2) / window.innerHeight }, colors: ['#ffffff', '#ffb7c5'] });
+            
+            if (candlesBlown === totalCandles) {
+                setTimeout(() => {
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => confetti({ particleCount: 40, spread: 80, origin: { x: Math.random(), y: Math.random() * 0.4 }, colors: ['#ec407a', '#f8bbd0', '#ffffff'] }), i * 200);
+                    }
+                    const celebration = document.createElement('div');
+                    celebration.innerHTML = '🎉 Selamat Ulang Tahun, PIW PIW, PITA CHAAAN :P 🎉';
+                    celebration.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:#ec407a;color:#fff;padding:25px 45px;border-radius:20px;font-family:Playfair Display;font-size:24px;font-weight:bold;z-index:200;transition:all 0.5s cubic-bezier(0.68,-0.55,0.265,1.55);text-align:center;white-space:nowrap;box-shadow:0 20px 40px rgba(0,0,0,0.2);';
+                    document.body.appendChild(celebration);
+                    setTimeout(() => celebration.style.transform = 'translate(-50%,-50%) scale(1)', 100);
+                    setTimeout(() => { celebration.style.transform = 'translate(-50%,-50%) scale(0)'; setTimeout(() => celebration.remove(), 500); }, 3500);
+                }, 500);
+            }
+        };
+
+        function triggerReveal() {
+            const finalScreen = document.getElementById('final-screen');
+            app.classList.remove('bg-pink-light');
+            document.body.style.backgroundColor = '#fff0f5';
+            cursorDot.style.backgroundColor = '#ec407a';
+            cursorOutline.style.borderColor = 'rgba(236, 64, 122, 0.6)';
+            finalScreen.style.opacity = '1';
+            finalScreen.style.pointerEvents = 'auto';
+            firePinkAndWhiteConfetti();
+            const tl = gsap.timeline();
+            tl.to('#final-title', { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", delay: 0.2 })
+              .to('#final-sub', { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.8")
+              .to('#final-msg', { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6");
+            initParallax();
+            
+            const finalTitle = document.getElementById('final-title');
+            const finalMsgDiv = document.getElementById('final-msg');
+            const goToWishes = () => {
+                const wishesScreen = document.getElementById('wishes-screen');
+                finalScreen.style.pointerEvents = 'none';
+                gsap.to(finalScreen, { opacity: 0, duration: 0.5, onComplete: () => {
+                    wishesScreen.style.opacity = '1';
+                    wishesScreen.style.pointerEvents = 'auto';
+                    fireCelebrationConfetti();
+                    gsap.fromTo('#wishes-screen .wish-card', { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: "power2.out" });
+                    // Animasi gambar profile masuk
+                    gsap.fromTo('.profile-pic', { opacity: 0, scale: 0.5, rotation: -10 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.8, delay: 0.2, ease: "back.out(1.2)" });
+                }});
+            };
+            finalTitle.addEventListener('click', goToWishes);
+            finalMsgDiv.addEventListener('click', goToWishes);
         }
 
-        // event untuk meng-handle error image jika unsplash gagal
-        const imgPhoto = document.querySelector('.photo');
-        if(imgPhoto && imgPhoto.complete && imgPhoto.naturalWidth === 0) {
-            imgPhoto.src = "Tak_berjudul367_20250614101748.webp";
-        }
-        imgPhoto.addEventListener('error', function() {
-            this.src = "Tak_berjudul367_20250614101748.webp";
+        const backBtn = document.getElementById('back-btn');
+        const wishesScreen = document.getElementById('wishes-screen');
+        const finalScreen = document.getElementById('final-screen');
+        
+        backBtn.addEventListener('click', () => {
+            wishesScreen.style.pointerEvents = 'none';
+            gsap.to(wishesScreen, { opacity: 0, duration: 0.5, onComplete: () => {
+                finalScreen.style.pointerEvents = 'auto';
+                gsap.to(finalScreen, { opacity: 1, duration: 0.5 });
+            }});
         });
-    })();
-</script>
+
+        const celebrateBtn = document.getElementById('celebrate-btn');
+        celebrateBtn.addEventListener('click', () => {
+            fireHeavyConfetti();
+            const msg = document.createElement('div');
+            msg.innerHTML = '🎉🎂 Selamat Ulang Tahun, PIW chann, PIW PIW PIW 🎂🎉';
+            msg.style.cssText = `position:fixed;bottom:30%;left:50%;transform:translateX(-50%);background:#ec407a;color:white;padding:16px 32px;border-radius:60px;font-family:'Syncopate',sans-serif;font-weight:bold;font-size:1rem;z-index:200;box-shadow:0 10px 40px rgba(0,0,0,0.2);white-space:nowrap;animation:fadeUp 1.5s ease forwards;pointer-events:none;`;
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 2500);
+        });
+
+        function firePinkAndWhiteConfetti() {
+            const duration = 3000;
+            const animationEnd = Date.now() + duration;
+            const pinkColors = ['#ec407a', '#f8bbd0', '#f48fb1', '#ffffff'];
+            const interval = setInterval(() => {
+                if (Date.now() > animationEnd) return clearInterval(interval);
+                confetti({ particleCount: 40, startVelocity: 30, spread: 360, origin: { x: Math.random(), y: Math.random() - 0.2 }, colors: pinkColors });
+            }, 200);
+        }
+
+        function fireCelebrationConfetti() {
+            confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, colors: ['#ec407a', '#f8bbd0', '#ffffff'] });
+            setTimeout(() => confetti({ particleCount: 100, spread: 120, origin: { y: 0.5, x: 0.2 }, colors: ['#f48fb1', '#ffffff'] }), 200);
+            setTimeout(() => confetti({ particleCount: 100, spread: 120, origin: { y: 0.5, x: 0.8 }, colors: ['#ec407a', '#f8bbd0'] }), 200);
+        }
+
+        window.fireHeavyConfetti = function() {
+            let end = Date.now() + 2000;
+            let colors = ['#ec407a', '#f8bbd0', '#ffffff'];
+            (function frame() {
+                confetti({ particleCount: 8, angle: 60, spread: 55, origin: { x: 0 }, colors });
+                confetti({ particleCount: 8, angle: 120, spread: 55, origin: { x: 1 }, colors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        };
+
+        function initParallax() {
+            const card = document.getElementById('greeting-card');
+            const container = document.getElementById('final-screen');
+            if (!card || !container) return;
+            container.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            container.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                card.style.transition = 'transform 0.5s ease';
+            });
+            container.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
+        }
+    </script>
 </body>
 </html>
